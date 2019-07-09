@@ -13,7 +13,7 @@
 Shows documentation using perldoc. Nothing else happens no matter
 what other options are specified.
 
-#### `-infile|file`
+#### `-infile or -file`
 
 The text file to use. Backup file name is derived from this file
 name approximately as below.

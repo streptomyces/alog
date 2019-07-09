@@ -28,10 +28,12 @@
 # !*.pod
 # !*.[rR]
 
+! .gitignore
 test_*
 temp*
 commands.md
 *.tmp
 alog
 .*sw[op]
+.*
 

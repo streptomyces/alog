@@ -7,15 +7,16 @@ use File::Copy;
 use File::Temp qw(tempfile tempdir);
 use File::Spec;
 use Text::Wrap;
-my $template="notetakingXXXXX";
+my $template="alogghXXXXX";
 local $Text::Wrap::columns = 65;
+use Getopt::Long;
+
+# Below, 3 lines of configuration.
+my $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark tw=70 nosmartindent filetype=pdc");
+my $notesdir = ".";
+my $tempdir = qw(/tmp);
 
 # {{{ Getopt::Long stuff
-use Getopt::Long;
-my $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark tw=70 nosmartindent filetype=pdc");
-# my $notesdir = "/home/sco/mnt/smoke/notes";
-my $notesdir = ".";
-my $tempdir = qw(/home/sco/volatile);
 my $file = "alog";
 my $dayadj;
 my $outfile;
@@ -26,7 +27,7 @@ my $regex;
 my $sep;
 GetOptions (
 "outfile:s" => \$outfile,
-"infile|file|notesfile:s" => \$file,
+"infile|file:s" => \$file,
 "notesdir:s" => \$notesdir,
 "add" => \$add,
 "dayadjust:i" => \$dayadj,
@@ -165,10 +166,11 @@ if(@ARGV) {
     $ts =~ s/\d+:\d+:\d+\s+//;
   }
   chomp($ts);
-  print($nh "\n### $ts ###\n\n");
+  print($nh "\n### $ts\n\n");
   print($nh "$wrapped\n");
   print($nh "//\n");
   $add = 0;
+  close($nh);
 }
 # }}}
 
@@ -189,7 +191,7 @@ if($add) {
       $ts =~ s/\d+:\d+:\d+\s+//;
     }
     chomp($ts);
-    print($nh "\n### $ts ###\n\n");
+    print($nh "\n### $ts\n\n");
     while(<$th>) {
       print($nh $_);
     }
@@ -200,12 +202,10 @@ if($add) {
 }
 # }}}
 
-
 # {{{ edit the notes file
 if($edit) {
 copy($notesFile, $backFile);
 system("$editor_command $notesFile");
-# system("gvim -f -c \"set t_vb=\" -c \"set background=dark tw=70 nosmartindent filetype=pdc\" $notesFile");
 }
 # }}}
 
@@ -232,13 +232,6 @@ close($ofh);
 
 exit;
 
-# sub recordOut {
-# my @rec = @_;
-# for my $line (@rec) {
-# print($line);
-# }
-# if($sep) { print("//\n"); }
-# }
 
 # {{{ sub outbyregex
 sub outbyregex {
