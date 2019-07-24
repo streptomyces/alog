@@ -69,7 +69,7 @@ note.pl
 Shows documentation using perldoc. Nothing else happens no
 matter what other options are specified.
 
-=item -infile|file|notesfile
+=item -infile|file
 
 The notes file to use. Backup file name is derived from this file
 name approximately as below.
@@ -110,28 +110,42 @@ Regular expression to select.
 
 =back
 
-=head2 Getting HTML
-
-To get HTML of all the notes
-
- /home/sco/bin/notes2html
-
-The above will write /home/sco/temp/notes.html on n51958.
-
-To get HTML of the output of a specific grep.
-
- note.pl -o matt.md -grep 'matt'
- notes2html matt.md
-
-The above will write /home/sco/temp/mattNotes.html on n51958.
-
-
 =head2 Description
 
-Meant for inserting and viewing records in a notes file.
+Script for inserting and viewing records in a notes file.
 
-A record is any text separated from the next record by "//"
-(two forward slashes) on a line of its own.
+A record is any text separated from the next record by C<//> (two forward
+slashes) on a line of its own.
+
+=head2 Configuration
+
+The first line of the script is
+
+ #!/usr/bin/perl
+
+If your perl binary is located elsewhere, edit this line.
+
+Then there are the following lines.
+
+ my $editor_command;
+ $editor_command = qq(vim + -c "set tw=70 nosi filetype=pdc");
+ my $notesdir = ".";
+ my $file = "alog";
+ my $tempdir = qw(/tmp);
+ local $Text::Wrap::columns = 65;
+ my $template="alogghXXXXX";
+
+In the above, you will certainly wish to change C<$notesdir>. It is
+best to run your editor in the foreground so that you do not get your
+prompt back till you are done writing. If you use C<gvim> then use the
+C<-f> option to prevent it from forking and detaching from shell like
+it usually does. C<vim> runs in the terminal and can be used as it it.
+You might want to change C<$file> to a file name of your liking.
+
+=head2 Author
+
+govind.chandra@jic.ac.uk
+
 
 =cut
 
