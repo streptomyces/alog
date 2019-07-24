@@ -1,6 +1,6 @@
 # alog.pl
 
-## Example
+## Examples
 
     perl alog.pl -add
     perl alog.pl -file alog -add
@@ -34,14 +34,15 @@ of the notes file.
 
 #### `-add`
 
-Add a note. An editor is started in the foreground to type your note
-in. This note is inserted in notes when you exit the editor.
+Add a note. An editor (vim by default) is started in the foreground to
+type your note in. This note is inserted in the notes file when you
+exit the editor. The current directory is already written into the
+editor when it starts.
 
 #### `-outfile`
 
 If specified, output is written to this file. Otherwise it is
-written to STDOUT. This is affected by the -outdir option described
-below.
+written to STDOUT.
 
 #### `-edit`
 
@@ -86,6 +87,15 @@ prompt back till you are done writing. If you use `gvim` then use the
 `-f` option to prevent it from forking and detaching from shell like
 it usually does. `vim` runs in the terminal and can be used as it it.
 You might want to change `$file` to a file name of your liking.
+
+## Comments
+
+If you make this script executable and put it in your PATH then you
+can call it from whatever directory you are working in and your notes
+will get appended to the same notes file. It will automatically add
+the current directory to your note when you add a note. The idea is to
+record the time and the directory in which you were working when you
+wrote the note. No structure is enforced for the notes.
 
 ## Author
 

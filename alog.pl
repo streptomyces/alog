@@ -8,6 +8,7 @@ use File::Spec;
 use Text::Wrap;
 use Cwd qq(abs_path);
 use Getopt::Long;
+use Fcntl qw(:flock);
 
 # Below, a few lines of configuration.
 my $editor_command;
@@ -179,6 +180,7 @@ if(@ARGV) {
   copy($notesFile, $backFile);
   my $wrapped = wrap("", "", @ARGV);
   open(my $nh, ">>", $notesFile);
+  flock($nh, LOCK_EX);
   my $ts = localtime();
   if($dayadj) {
     my $tt = time();
@@ -188,10 +190,11 @@ if(@ARGV) {
   }
   chomp($ts);
   print($nh "\n### $ts\n\n");
-  print($nh "*$curdir*\n");
+  print($nh "Directory: $curdir\n");
   print($nh "$wrapped\n");
   print($nh "//\n");
   $add = 0;
+  flock($nh, LOCK_UN);
   close($nh);
 }
 # }}}
@@ -205,6 +208,7 @@ if($add) {
   system("$editor_command $fn");
   if(-f $fn and -s $fn) {
     open(my $nh, ">>", $notesFile);
+    flock($nh, LOCK_EX);
     open(my $th, "<", $fn);
     my $ts = localtime();
     if($dayadj) {
@@ -219,7 +223,9 @@ if($add) {
       print($nh $_);
     }
     print($nh "//\n");
-    close($th); close($nh);
+    close($th);
+    flock($nh, LOCK_UN);
+    close($nh);
   }
   unlink($fn);
 }
