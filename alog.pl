@@ -12,9 +12,9 @@ use Getopt::Long;
 
 # Below, a few lines of configuration.
 my $editor_command;
-# $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark);
-# $editor_command .= qq( tw=70 nosmartindent filetype=pdc");
-$editor_command = qq(vim -c "set tw=70 nosi filetype=pdc");
+# $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark");
+# $editor_command .= qq( -c "set tw=70 nosmartindent filetype=pdc");
+$editor_command = qq(vim + -c "set tw=70 nosi filetype=pdc");
 my $notesdir = ".";
 my $file = "alog";
 my $tempdir = qw(/tmp);
@@ -185,6 +185,7 @@ if(@ARGV) {
 if($add) {
   copy($notesFile, $backFile);
   my($fh, $fn)=tempfile($template, DIR => $tempdir, SUFFIX => '.tmp');
+  print($fh "Directory: $curdir:\n\n");
   close($fh);
   system("$editor_command $fn");
   if(-f $fn and -s $fn) {
@@ -199,7 +200,6 @@ if($add) {
     }
     chomp($ts);
     print($nh "\n### $ts\n\n");
-    print($nh "*$curdir*\n");
     while(<$th>) {
       print($nh $_);
     }

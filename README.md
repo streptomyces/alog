@@ -69,8 +69,8 @@ If your perl binary is located elsewhere, edit this line.
 Then there are the following lines.
 
 ~~~ 
-my $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark);
-$editor_command .= qq( tw=70 nosmartindent filetype=pdc");
+my $editor_command;
+$editor_command = qq(vim + -c "set tw=70 nosi filetype=pdc");
 my $notesdir = ".";
 my $file = "alog";
 my $tempdir = qw(/tmp);
@@ -78,11 +78,14 @@ local $Text::Wrap::columns = 65;
 my $template="alogghXXXXX";
 ~~~
 
-You will certainly wish to change `$notesdir` and `$editor_command`.
-Note that the `$editor_command` is spread over two lines. It is best
-to run your editor in the foreground so that you do not get your
-prompt back till you are done writing. I use the `-f` option to `gvim`
-to prevent it from forking and detaching from shell like it usually
-does. `vim` runs in the terminal and can be used as it it. You might
-want to change `$file` to a file name of your liking.
+In the above, you will certainly wish to change `$notesdir`. It is
+best to run your editor in the foreground so that you do not get your
+prompt back till you are done writing. If you use `gvim` then use the
+`-f` option to prevent it from forking and detaching from shell like
+it usually does. `vim` runs in the terminal and can be used as it it.
+You might want to change `$file` to a file name of your liking.
+
+## Author
+
+govind.chandra@jic.ac.uk
 
