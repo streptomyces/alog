@@ -28,7 +28,7 @@ file. Only negative values make sense here to write notes about
 dates before today. Note that the entry is still made at the bottom
 of the notes file.
 
-    alog.pl -file domestic -add -dayadj -9
+    alog.pl -add -dayadj -9
 
 #### `-add`
 
@@ -55,3 +55,34 @@ Script for inserting and viewing records in a notes file.
 
 A record is any text separated from the next record by _//_ (two
 forward slashes) on a line of its own.
+
+## Configuration
+
+The first line of the script is
+
+~~~ 
+#!/usr/bin/perl
+~~~
+
+If your perl binary is located elsewhere, edit this line.
+
+Then there are the following lines.
+
+~~~ 
+my $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark);
+$editor_command .= qq( tw=70 nosmartindent filetype=pdc");
+my $notesdir = ".";
+my $file = "alog";
+my $tempdir = qw(/tmp);
+local $Text::Wrap::columns = 65;
+my $template="alogghXXXXX";
+~~~
+
+You will certainly wish to change `$notesdir` and `$editor_command`.
+Note that the `$editor_command` is spread over two lines. It is best
+to run your editor in the foreground so that you do not get your
+prompt back till you are done writing. I use the `-f` option to `gvim`
+to prevent it from forking and detaching from shell like it usually
+does. `vim` runs in the terminal and can be used as it it. You might
+want to change `$file` to a file name of your liking.
+

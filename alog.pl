@@ -7,17 +7,22 @@ use File::Copy;
 use File::Temp qw(tempfile tempdir);
 use File::Spec;
 use Text::Wrap;
-my $template="alogghXXXXX";
-local $Text::Wrap::columns = 65;
+use Cwd qq(abs_path);
 use Getopt::Long;
 
-# Below, 3 lines of configuration.
-my $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark tw=70 nosmartindent filetype=pdc");
+# Below, a few lines of configuration.
+my $editor_command;
+# $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark);
+# $editor_command .= qq( tw=70 nosmartindent filetype=pdc");
+$editor_command = qq(vim -c "set tw=70 nosi filetype=pdc");
 my $notesdir = ".";
+my $file = "alog";
 my $tempdir = qw(/tmp);
+local $Text::Wrap::columns = 65;
+my $template="alogghXXXXX";
+# End of configuration lines.
 
 # {{{ Getopt::Long stuff
-my $file = "alog";
 my $dayadj;
 my $outfile;
 my $edit;
@@ -138,6 +143,7 @@ A record is any text separated from the next record by "//"
 my $backbn = "." . $file . ".backup";
 my $notesFile = File::Spec->catfile($notesdir, $file);
 my $backFile = File::Spec->catfile($notesdir, $backbn);
+my $curdir = abs_path();
 
 
 my $ofh;
@@ -167,6 +173,7 @@ if(@ARGV) {
   }
   chomp($ts);
   print($nh "\n### $ts\n\n");
+  print($nh "*$curdir*\n");
   print($nh "$wrapped\n");
   print($nh "//\n");
   $add = 0;
@@ -192,6 +199,7 @@ if($add) {
     }
     chomp($ts);
     print($nh "\n### $ts\n\n");
+    print($nh "*$curdir*\n");
     while(<$th>) {
       print($nh $_);
     }
