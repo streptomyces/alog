@@ -76,6 +76,8 @@ name approximately as below.
 
  my $backbn = "." . $file . ".backup";
 
+This is optional. The default notes file is stored in C<$file>.
+
 =item -dayadjust
 
 Integer. Adjust the date by this many days. When this is used
