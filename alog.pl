@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 use 5.14.0;
 use Carp;
-use lib qw(/home/sco /home/sco/perllib);
 use File::Basename;
 use File::Copy;
 use File::Temp qw(tempfile tempdir);
