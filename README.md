@@ -2,6 +2,7 @@
 
 ## Examples
 
+    perl alog.pl "This is a note provided on the command line."
     perl alog.pl -add
     perl alog.pl -file alog -add
     perl alog.pl -file alog -grep test
@@ -58,6 +59,11 @@ Script for inserting and viewing records in a notes file.
 
 A record is any text separated from the next record by _//_ (two
 forward slashes) on a line of its own.
+
+If a non-option argument is provided then it is considered to
+be the text of a note you wish to append to the notes file.
+
+    perl alog.pl "This is a note provided on the command line."
 
 ## Configuration
 

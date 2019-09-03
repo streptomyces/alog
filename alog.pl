@@ -14,7 +14,7 @@ use Fcntl qw(:flock);
 my $editor_command;
 # $editor_command = qq(gvim -f -c "set t_vb=" -c "set background=dark");
 # $editor_command .= qq( -c "set tw=70 nosmartindent filetype=pdc");
-$editor_command = qq(vim + -c "set tw=70 nosi filetype=pdc");
+$editor_command = qq(vim + -c "set tw=65 nosi filetype=pdc");
 my $notesdir = ".";
 my $file = "alog";
 my $tempdir = qw(/tmp);
@@ -53,13 +53,14 @@ exit;
 
 =head1 Name
 
-note.pl
+alog.pl
 
 =head2 Example
 
- perl note.pl -add
- perl note.pl -file notes -add
- perl note.pl -file notes -grep test
+ perl alog.pl "This is a note provided on the command line."
+ perl alog.pl -add
+ perl alog.pl -file alog -add
+ perl alog.pl -file alog -grep test
 
 =head2 Options
 
@@ -89,7 +90,7 @@ bottom of the notes file.
 
 Example
 
- note.pl -file domestic -add -dayadj -9
+ alog.pl -file domestic -add -dayadj -9
 
 =item -add
 
@@ -100,8 +101,7 @@ editor.
 =item -outfile
 
 If specified, output is written to this file. Otherwise it
-is written to STDOUT. This is affected by the -outdir option
-described below.
+is written to STDOUT.
 
 =item -edit
 
